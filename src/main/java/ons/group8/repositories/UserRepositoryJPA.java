@@ -27,7 +27,6 @@ public interface UserRepositoryJPA extends JpaRepository<User, Long> {
 
     Set<User> findUsersByFirstName(String firstName);
 
-
-
+    User findUserById(Long id);
 
 }

@@ -105,4 +105,13 @@ public class AdminController {
         model.addAttribute("users", theAdminService.findAll());
         return "user-roles";
     }
+
+
+    @GetMapping("/user-delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteUser(@PathVariable("id") Long id, Model model) {
+        theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
+        model.addAttribute("users", theAdminService.findAll());
+        return "user-roles";
+    }
 }

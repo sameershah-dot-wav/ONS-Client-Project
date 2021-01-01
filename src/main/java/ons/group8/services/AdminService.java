@@ -16,6 +16,6 @@ public interface AdminService {
 
     Optional<Role> findRolesById(Long id);
 
-
+    User findUserById(Long id);
 
 }

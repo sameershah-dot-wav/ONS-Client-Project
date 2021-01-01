@@ -44,4 +44,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
+    @Override
+    public User findUserById(Long id) {
+        return userRepositoryJPA.findUserById(id);
+    }
 }
