@@ -6,6 +6,8 @@ import ons.group8.repositories.RoleRepositoryJPA;
 import ons.group8.repositories.UserRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -41,6 +43,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Optional<Role> findRolesById(Long id){
         return roleRepositoryJPA.findById(id);
+    }
+
+    @Override
+    public User findUserById(Long id){
+        return userRepositoryJPA.findUserById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserById(Long id){
+        userRepositoryJPA.deleteUserById(id);
     }
 
 

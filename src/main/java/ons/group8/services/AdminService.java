@@ -16,6 +16,9 @@ public interface AdminService {
 
     Optional<Role> findRolesById(Long id);
 
+    void deleteUserById(Long id);
+
+    User findUserById(Long id);
 
 
 }
