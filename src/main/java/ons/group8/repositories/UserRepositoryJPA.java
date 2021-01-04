@@ -32,8 +32,6 @@ public interface UserRepositoryJPA extends JpaRepository<User, Long> {
 
     void deleteUserById(Long id);
 
-
-
     @Query("update User u SET u.email = :email WHERE u.id = :id")
     void updateUserEmail(@Param("id") Long id, @Param("email") String email);
 
