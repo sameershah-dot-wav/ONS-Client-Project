@@ -81,6 +81,15 @@ CREATE TABLE IF NOT EXISTS CHECKLIST_ITEM(
      FOREIGN KEY (personal_checklist_id) REFERENCES PERSONAL_CHECKLIST(id),
      FOREIGN KEY (checklist_template_item_id) REFERENCES CHECKLIST_TEMPLATE_ITEM(id))
      ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS CONFIRMATION_TOKEN(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    confirmation_token VARCHAR(255) NULL,
+    created_date DATETIME NULL,
+    user_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id) REFERENCES USER(id))
+    ENGINE = InnoDB;
      
      
 -- validate email procedure
