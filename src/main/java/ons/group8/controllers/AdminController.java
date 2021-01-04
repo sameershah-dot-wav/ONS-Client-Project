@@ -2,9 +2,11 @@ package ons.group8.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import ons.group8.controllers.forms.UserRoleForm;
+import ons.group8.domain.ChecklistTemplate;
 import ons.group8.domain.PersonalChecklist;
 import ons.group8.domain.Role;
 import ons.group8.domain.User;
+import ons.group8.repositories.ChecklistTemplateRepositoryJPA;
 import ons.group8.repositories.PersonalChecklistRepositoryJPA;
 import ons.group8.repositories.RoleRepositoryJPA;
 import ons.group8.repositories.UserRepositoryJPA;
@@ -30,6 +32,7 @@ public class AdminController {
     private final RoleRepositoryJPA theRoleRepositoryJPA;
     private final UserRepositoryJPA theUserRepositoryJPA;
     private final PersonalChecklistRepositoryJPA thePersonalChecklistRepositoryJPA;
+    private final ChecklistTemplateRepositoryJPA theChecklistTemplateRepositoryJPA;
     private final UserService userService;
 
 
@@ -38,12 +41,14 @@ public class AdminController {
                            RoleRepositoryJPA aRoleRepositoryJPA,
                            UserRepositoryJPA aUserRepositoryJPA,
                            UserService aUserService,
-                           PersonalChecklistRepositoryJPA aPersonalChecklisRepositoryJPA) {
+                           PersonalChecklistRepositoryJPA aPersonalChecklistRepositoryJPA,
+                           ChecklistTemplateRepositoryJPA aChecklistTemplateRepositoryJPA) {
         theAdminService = aAdminService;
         theRoleRepositoryJPA = aRoleRepositoryJPA;
         theUserRepositoryJPA = aUserRepositoryJPA;
         userService = aUserService;
-        thePersonalChecklistRepositoryJPA = aPersonalChecklisRepositoryJPA;
+        thePersonalChecklistRepositoryJPA = aPersonalChecklistRepositoryJPA;
+        theChecklistTemplateRepositoryJPA = aChecklistTemplateRepositoryJPA;
     }
 
     @GetMapping("/user-edit/{id}")
@@ -119,6 +124,8 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteUser(@PathVariable("id") Long id, Model model) {
         List<PersonalChecklist> personalChecklistList = thePersonalChecklistRepositoryJPA.findPersonalChecklistsByUser_Id(id);
+        List<ChecklistTemplate> checklistTemplateList = theChecklistTemplateRepositoryJPA.findChecklistTemplatesByAuthor_Id(id);
+        theChecklistTemplateRepositoryJPA.deleteAll(checklistTemplateList);
         thePersonalChecklistRepositoryJPA.deleteAll(personalChecklistList);
         theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
         model.addAttribute("users", theAdminService.findAll());
