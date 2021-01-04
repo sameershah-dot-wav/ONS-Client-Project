@@ -180,14 +180,14 @@ CREATE USER IF NOT EXISTS 'onsUser'@'localhost' IDENTIFIED BY '2Nng2?9P6q47QJLAL
 
 grant usage on ons.* to 'onsUser'@'localhost';
 
-grant select, insert, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.USER to 'onsUser'@'localhost';
+grant select, insert, delete, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.USER to 'onsUser'@'localhost';
 grant select, insert, update, alter on ons.ROLE to 'onsUser'@'localhost';
 grant select, insert, update, alter, delete on ons.USER_ROLE to 'onsUser'@'localhost';
 grant select, insert, update, alter on ons.CHECKLIST_TEMPLATE to 'onsUser'@'localhost';
 grant select, insert, update, alter on ons.TOPIC to 'onsUser'@'localhost';
 grant select, insert, update, alter on ons.CHECKLIST_TEMPLATE_ITEM to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.PERSONAL_CHECKLIST to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.CHECKLIST_ITEM to 'onsUser'@'localhost';
+grant select, insert, update, delete, alter on ons.PERSONAL_CHECKLIST to 'onsUser'@'localhost';
+grant select, insert, update, delete, alter on ons.CHECKLIST_ITEM to 'onsUser'@'localhost';
 grant execute on procedure ons.getCheckedItemsCountForPersonalChecklist to 'onsUser'@'localhost';
 show grants for 'onsUser'@'localhost';
 flush privileges;

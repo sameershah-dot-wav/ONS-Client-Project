@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface PersonalChecklistRepositoryJPA extends JpaRepository<PersonalChecklist, Long> {
 
+    List<PersonalChecklist> findPersonalChecklistsByUser_Id(Long id);
+
     List<PersonalChecklist> findAllByUserId_Email(String email);
 
     List<PersonalChecklist> getAllByChecklistTemplate(ChecklistTemplate checklistTemplate);
