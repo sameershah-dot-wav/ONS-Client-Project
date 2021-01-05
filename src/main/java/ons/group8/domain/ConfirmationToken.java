@@ -1,16 +1,24 @@
 package ons.group8.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name="confirmation_token")
 public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="token_id")
-    private long tokenId;
+    @Column(name="id")
+    private Long id;
 
     @Column(name="confirmation_token")
     private String confirmationToken;
@@ -28,12 +36,28 @@ public class ConfirmationToken {
         confirmationToken = UUID.randomUUID().toString();
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getConfirmationToken() {
         return confirmationToken;
     }
 
-    public long getTokenId() {
-        return tokenId;
+    public Long getId() {
+        return id;
     }
 
     public Date getCreatedDate() {

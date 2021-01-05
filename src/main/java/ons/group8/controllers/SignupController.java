@@ -1,5 +1,6 @@
 package ons.group8.controllers;
 
+import ons.group8.controllers.api.UserDTO;
 import ons.group8.controllers.forms.UserForm;
 import ons.group8.domain.ConfirmationToken;
 import ons.group8.domain.User;
@@ -62,12 +63,11 @@ public class SignupController {
                 mailMessage.setSubject("Complete Registration!");
                 mailMessage.setFrom("chand312902@gmail.com");
                 mailMessage.setText("To confirm your account, please click here : "
-                        +"https://localhost:8443/confirm-account?token="+confirmationToken.getConfirmationToken());
+                        +"https://localhost:8443/sign-up/confirm-account?token="+confirmationToken.getConfirmationToken());
 
                 emailSenderService.sendEmail(mailMessage);
 
                 model.addAttribute("user", newUser);
-
 
                 return "message";
             } catch (Exception e) {
@@ -77,24 +77,26 @@ public class SignupController {
         }
     }
 
-    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
+    @GetMapping("confirm-account")
+    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
     {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
 
         if(token != null)
         {
             User user = userRepositoryJPA.findUserByEmail(token.getUser().getEmail());
             user.setEnabled(true);
             userRepositoryJPA.save(user);
-            modelAndView.setViewName("accountVerified");
+            System.out.println(user);
+            return "email-verified";
         }
         else
         {
-            modelAndView.addObject("message","The link is invalid or broken!");
+            modelAndView.addObject("message", "The link is invalid or broken!");
             modelAndView.setViewName("error");
+            return "403-access-denied";
         }
 
-        return modelAndView;
     }
 }
