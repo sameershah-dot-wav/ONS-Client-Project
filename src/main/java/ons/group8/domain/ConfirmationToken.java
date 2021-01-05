@@ -8,7 +8,7 @@ import java.util.UUID;
 public class ConfirmationToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="token_id")
     private long tokenId;
 
@@ -18,7 +18,7 @@ public class ConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
@@ -26,5 +26,21 @@ public class ConfirmationToken {
         this.user = user;
         createdDate = new Date();
         confirmationToken = UUID.randomUUID().toString();
+    }
+
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public long getTokenId() {
+        return tokenId;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
