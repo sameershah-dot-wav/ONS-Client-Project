@@ -53,7 +53,7 @@ public class SignupController {
         } else {
             try {
                 userService.save(new UserCreationEvent(newUser.getEmail(), newUser.getFirstName(), newUser.getLastName(), newUser.getPassword(), newUser.getRepeatPassword()));
-                ConfirmationToken confirmationToken = new ConfirmationToken(userService.findByEmail("ShahS58@cardiff.ac.uk"));
+                ConfirmationToken confirmationToken = new ConfirmationToken(userService.findByEmail(newUser.getEmail()));
 
                 confirmationTokenRepository.save(confirmationToken);
 
@@ -62,10 +62,11 @@ public class SignupController {
                 mailMessage.setSubject("Complete Registration!");
                 mailMessage.setFrom("chand312902@gmail.com");
                 mailMessage.setText("To confirm your account, please click here : "
-                        +"http://localhost:8443/confirm-account?token="+confirmationToken.getConfirmationToken());
+                        +"https://localhost:8443/confirm-account?token="+confirmationToken.getConfirmationToken());
 
                 emailSenderService.sendEmail(mailMessage);
 
+                model.addAttribute("user", newUser);
 
 
                 return "message";

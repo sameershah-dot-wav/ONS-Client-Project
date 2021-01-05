@@ -13,6 +13,7 @@
     <h1 th:text="${title}"></h1>
     <span th:text="${message}"></span>
     <br>
+    <span th:text="'A verification email has been sent to: ' + ${}"
     <a sec:authorize="!isAnonymous()" href="/">Go to home page...</a>
     <a sec:authorize="isAnonymous()" href="/login">Go to login page...</a>
 </div>
