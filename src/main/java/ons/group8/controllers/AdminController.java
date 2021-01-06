@@ -50,11 +50,7 @@ public class AdminController {
         theConfirmationTokenRepositoryJPA = aConfirmationTokenRepositoryJPA;
     }
 
-    @GetMapping("/user-edit/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String editUser(@PathVariable("id") Long id, Model model) {
-        return "edit-user";
-    }
+
 
     @GetMapping("user-roles")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -101,6 +97,7 @@ public class AdminController {
             return "userrole-form";
         }
         User userExist = userRoleForm.getUser();
+
         if(userExist == null) {
             log.error("user not exist");
             model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
@@ -110,11 +107,13 @@ public class AdminController {
         }
 
         if(userExist.isEnabled() == false){
-            log.error("roles of unverified users cannot be changed");
+            log.error("details of unverified users cannot be changed");
             model.addAttribute("message", "The email address of" + userExist.getFirstName() + " " + userExist.getLastName() + " has not been verified");
             model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
             return "userrole-form";
         }
+
+
 
         Set<Role> newRoles = userRoleForm
                 .getAssignedRolesIds()
@@ -122,6 +121,7 @@ public class AdminController {
                 .map(r -> theAdminService.findRolesById(r).get())
                 .collect(Collectors.toSet());
         userExist.setRoles(newRoles);
+
         theUserRepositoryJPA.save(userExist);
         model.addAttribute("users", theAdminService.findAll());
         return "user-roles";
