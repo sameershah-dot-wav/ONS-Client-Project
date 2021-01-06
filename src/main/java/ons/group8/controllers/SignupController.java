@@ -63,7 +63,7 @@ public class SignupController {
                 mailMessage.setSubject("Complete Registration!");
                 mailMessage.setFrom("chand312902@gmail.com");
                 mailMessage.setText("To confirm your account, please click here : "
-                        +"https://localhost:8443/sign-up/confirm-account?token="+confirmationToken.getConfirmationToken());
+                        +"https://localhost:8443/sign-up/confirm-account/"+user.getEmail()+"?token="+confirmationToken.getConfirmationToken());
 
                 emailSenderService.sendEmail(mailMessage);
 
@@ -77,8 +77,8 @@ public class SignupController {
         }
     }
 
-    @GetMapping("confirm-account")
-    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
+    @GetMapping("confirm-account/{email}")
+    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, @PathVariable("email") String email)
     {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
 

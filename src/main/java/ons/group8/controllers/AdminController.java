@@ -104,6 +104,14 @@ public class AdminController {
             System.out.println("errors = " + bindings.getAllErrors());
             return "userrole-form";
         }
+
+        if(userExist.isEnabled() == false){
+            log.error("roles of unverified users cannot be changed");
+            model.addAttribute("message", "The email address of" + userExist.getFirstName() + " " + userExist.getLastName() + " has not been verified");
+            model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
+            return "userrole-form";
+        }
+
         Set<Role> newRoles = userRoleForm
                 .getAssignedRolesIds()
                 .stream()
