@@ -71,14 +71,4 @@ public class AdminServiceImpl implements AdminService {
     public User findUserById(Long id) {
         return userRepositoryJPA.findUserById(id);
     }
-
-    @Override
-    public void updateUserDetails(Long id) {
-    }
-
-
-    @Override
-    public User findUserById(Long id) {
-        return userRepositoryJPA.findUserById(id);
-    }
 }

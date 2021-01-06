@@ -5,6 +5,7 @@ import ons.group8.controllers.forms.UserRoleForm;
 import ons.group8.domain.PersonalChecklist;
 import ons.group8.domain.Role;
 import ons.group8.domain.User;
+import ons.group8.repositories.ConfirmationTokenRepositoryJPA;
 import ons.group8.repositories.PersonalChecklistRepositoryJPA;
 import ons.group8.repositories.RoleRepositoryJPA;
 import ons.group8.repositories.UserRepositoryJPA;
@@ -30,6 +31,7 @@ public class AdminController {
     private final RoleRepositoryJPA theRoleRepositoryJPA;
     private final UserRepositoryJPA theUserRepositoryJPA;
     private final PersonalChecklistRepositoryJPA thePersonalChecklistRepositoryJPA;
+    private final ConfirmationTokenRepositoryJPA theConfirmationTokenRepositoryJPA;
     private final UserService userService;
 
 
@@ -38,12 +40,14 @@ public class AdminController {
                            RoleRepositoryJPA aRoleRepositoryJPA,
                            UserRepositoryJPA aUserRepositoryJPA,
                            UserService aUserService,
-                           PersonalChecklistRepositoryJPA aPersonalChecklisRepositoryJPA) {
+                           PersonalChecklistRepositoryJPA aPersonalChecklistRepositoryJPA,
+                           ConfirmationTokenRepositoryJPA aConfirmationTokenRepositoryJPA) {
         theAdminService = aAdminService;
         theRoleRepositoryJPA = aRoleRepositoryJPA;
         theUserRepositoryJPA = aUserRepositoryJPA;
         userService = aUserService;
-        thePersonalChecklistRepositoryJPA = aPersonalChecklisRepositoryJPA;
+        thePersonalChecklistRepositoryJPA = aPersonalChecklistRepositoryJPA;
+        theConfirmationTokenRepositoryJPA = aConfirmationTokenRepositoryJPA;
     }
 
     @GetMapping("/user-edit/{id}")
@@ -123,13 +127,14 @@ public class AdminController {
         return "user-roles";
     }
 
-
     @GetMapping("/user-delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteUser(@PathVariable("id") Long id, Model model) {
         List<PersonalChecklist> personalChecklistList = thePersonalChecklistRepositoryJPA.findPersonalChecklistsByUser_Id(id);
         thePersonalChecklistRepositoryJPA.deleteAll(personalChecklistList);
+        theConfirmationTokenRepositoryJPA.delete(theConfirmationTokenRepositoryJPA.findByUserId(id));
         theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
+
         model.addAttribute("users", theAdminService.findAll());
         return "user-roles";
     }

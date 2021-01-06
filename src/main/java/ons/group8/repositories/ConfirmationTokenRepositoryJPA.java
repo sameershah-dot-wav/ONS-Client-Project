@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ConfirmationTokenRepositoryJPA extends JpaRepository<ConfirmationToken, String> {
     ConfirmationToken findByConfirmationToken(String confirmationToken);
 
+    ConfirmationToken findByUserId(Long id);
 }

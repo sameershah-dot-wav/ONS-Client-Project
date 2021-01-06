@@ -24,19 +24,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+
     @NotEmpty
     private String email;
 
-    @NotNull
+
     @NotEmpty
     private String firstName;
 
-    @NotNull
+
     @NotEmpty
     private String lastName;
 
-    @NotNull
+
     @NotEmpty
     private String password;
 
