@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
         return findByEmail(username);
     }
 
+
     @Override
     public Set<User> findUsersByFirstName(String firstName){
         return userRepository.findUsersByFirstName(firstName);

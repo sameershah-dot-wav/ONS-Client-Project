@@ -10,12 +10,9 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div style="margin-left: 2%">
-    <h1 th:text="${title}"></h1>
-    <span th:text="${message}"></span>
-    <br>
-    <span th:text="'A verification email has been sent to: ' + ${user.getEmail()}"></span>
-    <a sec:authorize="!isAnonymous()" href="/">Go to home page...</a>
-    <a sec:authorize="isAnonymous()" href="/login">Go to login page...</a>
+    <h3>Congratulations, your account is now verified!</h3>
+    <h3>go back to login:
+        <a sec:authorize="isAnonymous()" href="/login">Go to login page...</a> </h3>
 </div>
 
 </body>

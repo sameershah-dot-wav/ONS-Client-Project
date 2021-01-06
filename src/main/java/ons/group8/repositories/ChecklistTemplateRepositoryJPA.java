@@ -9,4 +9,6 @@ public interface ChecklistTemplateRepositoryJPA extends JpaRepository<ChecklistT
     ChecklistTemplate getChecklistTemplateById(Long id);
 
     List<ChecklistTemplate> findAllByAuthor_Email(String authorEmail);
+
+    List<ChecklistTemplate> findChecklistTemplatesByAuthor_Id(Long id);
 }
