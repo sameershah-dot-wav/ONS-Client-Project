@@ -114,7 +114,6 @@ public class AdminController {
         }
 
 
-
         Set<Role> newRoles = userRoleForm
                 .getAssignedRolesIds()
                 .stream()
@@ -135,7 +134,7 @@ public class AdminController {
         theConfirmationTokenRepositoryJPA.delete(theConfirmationTokenRepositoryJPA.findByUserId(id));
         theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
 
-        model.addAttribute("users", theAdminService.findAll());
+         model.addAttribute("users", theAdminService.findAll());
         return "user-roles";
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 @Configuration
 @EnableWebSecurity
@@ -60,9 +61,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/403-access-denied");
 
+
         http.httpBasic().disable();
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
+        http.headers().contentSecurityPolicy("script-src 'self' https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js " +
+                "https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" +
+                " https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js " +
+                "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.cs ");
     }
 
     @Bean

@@ -10,8 +10,8 @@
 <form action="#" th:action="@{/author/set-topic}" enctype="multipart/form-data" method="post"
       th:object="${topicForm}" class="form-new-checklist container">
     <fieldset>
-        <h1 th:text="${title}"></h1>
-        <pre th:text="${titleDescription}"></pre>
+        <h1 th:utext="${title}"></h1>
+        <pre th:utext="${titleDescription}"></pre>
         <br>
         <div class="form-group">
             <label th:for="${topicTitle}">Topic Title: </label>
