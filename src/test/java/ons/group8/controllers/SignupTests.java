@@ -19,27 +19,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class SignupTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private UserRepositoryJPA userRepository;
-
-    @Test
-    public void shouldGetSignUpPage() throws Exception {
-
-        this.mockMvc
-                .perform(get("/sign-up/add-user"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void shouldAddUser() throws Exception {
-        User user = new User("shefin@cardiff.ac.uk", "Password1!", "Nimrod", "Shefi");
-        userRepository.save(user);
-    }
 }

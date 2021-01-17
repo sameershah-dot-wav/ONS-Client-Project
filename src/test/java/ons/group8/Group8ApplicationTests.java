@@ -7,8 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class Group8ApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
 }

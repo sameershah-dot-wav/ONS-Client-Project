@@ -1,12 +1,12 @@
 // function ValidateEmail taken from: https://www.w3resource.com/javascript/form/email-validation.php
 // however, regex was taken from here: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 
-function ValidateEmail(){
-    const email = document.form1.email;
-    const mailFormat = /^[^\s@<>+*/=!"£$%^&()`¬\\|;:?,#~]+@cardiff.ac.uk/;
-
-    return !!email.value.match(mailFormat);
-}
+// function ValidateEmail(){
+//     const email = document.form1.email;
+//     const mailFormat = /^[^\s@<>+*/=!"£$%^&()`¬\\|;:?,#~]+@cardiff.ac.uk/;
+//
+//     return !!email.value.match(mailFormat);
+// }
 
 function ValidatePassword() {
     const password = document.form1.password.value;
