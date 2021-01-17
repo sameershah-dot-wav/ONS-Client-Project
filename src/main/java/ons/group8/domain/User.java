@@ -24,19 +24,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+
     @NotEmpty
     private String email;
 
-    @NotNull
+
     @NotEmpty
     private String firstName;
 
-    @NotNull
+
     @NotEmpty
     private String lastName;
 
-    @NotNull
+
     @NotEmpty
     private String password;
 
@@ -48,7 +48,8 @@ public class User {
 
     private boolean enabled;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -57,7 +58,7 @@ public class User {
 
 
     public User(String email, String password, String firstName, String lastName) {
-        this(null, email, firstName, lastName, password, true, 0, null , true, new HashSet<>());
+        this(null, email, firstName, lastName, password, true, 0, null , false, new HashSet<>() );
     }
 
     public void addRole(Role role) {

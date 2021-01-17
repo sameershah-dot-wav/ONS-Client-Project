@@ -2,8 +2,11 @@ package ons.group8.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import ons.group8.controllers.forms.UserRoleForm;
+import ons.group8.domain.PersonalChecklist;
 import ons.group8.domain.Role;
 import ons.group8.domain.User;
+import ons.group8.repositories.ConfirmationTokenRepositoryJPA;
+import ons.group8.repositories.PersonalChecklistRepositoryJPA;
 import ons.group8.repositories.RoleRepositoryJPA;
 import ons.group8.repositories.UserRepositoryJPA;
 import ons.group8.services.AdminService;
@@ -27,6 +30,8 @@ public class AdminController {
     private final AdminService theAdminService;
     private final RoleRepositoryJPA theRoleRepositoryJPA;
     private final UserRepositoryJPA theUserRepositoryJPA;
+    private final PersonalChecklistRepositoryJPA thePersonalChecklistRepositoryJPA;
+    private final ConfirmationTokenRepositoryJPA theConfirmationTokenRepositoryJPA;
     private final UserService userService;
 
 
@@ -34,11 +39,15 @@ public class AdminController {
     public AdminController(AdminService aAdminService,
                            RoleRepositoryJPA aRoleRepositoryJPA,
                            UserRepositoryJPA aUserRepositoryJPA,
-                           UserService aUserService) {
+                           UserService aUserService,
+                           PersonalChecklistRepositoryJPA aPersonalChecklistRepositoryJPA,
+                           ConfirmationTokenRepositoryJPA aConfirmationTokenRepositoryJPA) {
         theAdminService = aAdminService;
         theRoleRepositoryJPA = aRoleRepositoryJPA;
         theUserRepositoryJPA = aUserRepositoryJPA;
         userService = aUserService;
+        thePersonalChecklistRepositoryJPA = aPersonalChecklistRepositoryJPA;
+        theConfirmationTokenRepositoryJPA = aConfirmationTokenRepositoryJPA;
     }
 
 
@@ -58,7 +67,6 @@ public class AdminController {
         }
     }
 
-
     @GetMapping("userrole-form/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String serveUserForm(@PathVariable("userId") Long userId, Model model) {
@@ -70,6 +78,7 @@ public class AdminController {
             UserRoleForm userRoleForm = new UserRoleForm(userExist.get(), userRoles);
             model.addAttribute("userRoleForm", userRoleForm);
             model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
+
             return "userrole-form";
         } else {
             log.error("Could not user with id: " + userId + " while trying to serve user role form");
@@ -88,6 +97,7 @@ public class AdminController {
             return "userrole-form";
         }
         User userExist = userRoleForm.getUser();
+
         if(userExist == null) {
             log.error("user not exist");
             model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
@@ -95,14 +105,36 @@ public class AdminController {
             System.out.println("errors = " + bindings.getAllErrors());
             return "userrole-form";
         }
+
+        if(userExist.isEnabled() == false){
+            log.error("details of unverified users cannot be changed");
+            model.addAttribute("message", "The email address of" + userExist.getFirstName() + " " + userExist.getLastName() + " has not been verified");
+            model.addAttribute("allRoles", theRoleRepositoryJPA.findAll());
+            return "userrole-form";
+        }
+
+
         Set<Role> newRoles = userRoleForm
                 .getAssignedRolesIds()
                 .stream()
                 .map(r -> theAdminService.findRolesById(r).get())
                 .collect(Collectors.toSet());
         userExist.setRoles(newRoles);
+
         theUserRepositoryJPA.save(userExist);
         model.addAttribute("users", theAdminService.findAll());
+        return "user-roles";
+    }
+
+    @GetMapping("/user-delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String deleteUser(@PathVariable("id") Long id, Model model) {
+        List<PersonalChecklist> personalChecklistList = thePersonalChecklistRepositoryJPA.findPersonalChecklistsByUser_Id(id);
+        thePersonalChecklistRepositoryJPA.deleteAll(personalChecklistList);
+        theConfirmationTokenRepositoryJPA.delete(theConfirmationTokenRepositoryJPA.findByUserId(id));
+        theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
+
+         model.addAttribute("users", theAdminService.findAll());
         return "user-roles";
     }
 }

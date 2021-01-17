@@ -21,3 +21,9 @@ roles: User, Author, Admin
 use for: filling out a personal checklist & creating new checklists template & managing user roles
 
 all users created through the register page will be given a default User role
+
+to test email verification, please register with a valid cardiff domain email.  If your email is not verified you
+will be unable to change the role of your account
+
+WARNING: whitelabel error page given after Author assigns a checklist, however checklist is still assigned and
+functionality still working.
