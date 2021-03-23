@@ -13,10 +13,6 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-
-    checkstyle {
-    ignoreFailures = true
-    }
 }
 
 repositories {
@@ -46,6 +42,10 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     runtimeOnly 'mysql:mysql-connector-java'
+}
+
+checkstyle {
+    checkstyleMain.ignoreFailures = true
 }
 
 test {
