@@ -43,10 +43,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
 }
 
-checkstyle {
-    ignoreFailures = true
-}
-
 test {
     useJUnitPlatform()
     ignoreFailures = true
