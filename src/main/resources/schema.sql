@@ -185,18 +185,18 @@ DELIMITER ;
 
 
 
-CREATE USER IF NOT EXISTS 'onsUser'@'localhost' IDENTIFIED BY '2Nng2?9P6q47QJLAL=^3';
+-- CREATE USER IF NOT EXISTS 'onsUser'@'localhost' IDENTIFIED BY '2Nng2?9P6q47QJLAL=^3';
 
-grant usage on ons.* to 'onsUser'@'localhost';
+-- grant usage on ons.* to 'onsUser'@'localhost';
 
-grant select, insert, delete, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.user to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.role to 'onsUser'@'localhost';
-grant select, insert, update, alter, delete on ons.user_role to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.checklist_template to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.topic to 'onsUser'@'localhost';
-grant select, insert, update, alter on ons.checklist_template_item to 'onsUser'@'localhost';
-grant select, insert, update, delete, alter on ons.personal_checklist to 'onsUser'@'localhost';
-grant select, insert, update, delete, alter on ons.checklist_item to 'onsUser'@'localhost';
-grant execute on procedure ons.getCheckedItemsCountForPersonalChecklist to 'onsUser'@'localhost';
-show grants for 'onsUser'@'localhost';
-flush privileges;
+-- grant select, insert, delete, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.user to 'onsUser'@'localhost';
+-- grant select, insert, update, alter on ons.role to 'onsUser'@'localhost';
+-- grant select, insert, update, alter, delete on ons.user_role to 'onsUser'@'localhost';
+-- grant select, insert, update, alter on ons.checklist_template to 'onsUser'@'localhost';
+-- grant select, insert, update, alter on ons.topic to 'onsUser'@'localhost';
+-- grant select, insert, update, alter on ons.checklist_template_item to 'onsUser'@'localhost';
+-- grant select, insert, update, delete, alter on ons.personal_checklist to 'onsUser'@'localhost';
+-- grant select, insert, update, delete, alter on ons.checklist_item to 'onsUser'@'localhost';
+-- grant execute on procedure ons.getCheckedItemsCountForPersonalChecklist to 'onsUser'@'localhost';
+-- show grants for 'onsUser'@'localhost';
+-- flush privileges;
