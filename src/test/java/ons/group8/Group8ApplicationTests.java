@@ -15,6 +15,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class Group8ApplicationTests {
 
+    @Autowired
+    private MockMvc mockMvc;
+    
     @Test
     @WithMockUser(roles = {"AUTHOR"})
     public void should_get_view_of_all_existing_checklists_page() throws Exception {
