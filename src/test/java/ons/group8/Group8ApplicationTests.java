@@ -1,4 +1,4 @@
-package ons.group8.controllers;
+package ons.group8.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
