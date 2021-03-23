@@ -13,10 +13,6 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-
-    checkstyle {
-    ignoreFailures = true
-    }
 }
 
 repositories {
@@ -49,7 +45,7 @@ dependencies {
 }
 
 checkstyle {
-    ignoreFailures = true
+    checkstyleMain.ignoreFailures = true
 }
 
 test {
