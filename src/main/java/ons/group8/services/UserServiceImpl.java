@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepositoryJPA userRepository;
     private final RoleRepositoryJPA roleRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder; //got password encoder from: https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
+    @Autowired
+    private PasswordEncoder passwordEncoder; //got password encoder from: https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
 
     @Autowired
     public UserServiceImpl(UserRepositoryJPA userRepository, RoleRepositoryJPA roleRepository) {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             }
             validateData(newUser);
             Role userRole = roleRepository.getRoleByName("USER");
-            User user = new User(newUser.getEmail().toLowerCase(), newUser.getFirstName(), newUser.getLastName(), newUser.getPassword());
+            User user = new User(newUser.getEmail().toLowerCase(), passwordEncoder.encode(newUser.getPassword()), newUser.getFirstName(), newUser.getLastName());
             user.addRole(userRole);
             userRepository.save(user); // The save() method returns the saved entity, including the id field which was null up until now.
         } catch (Exception e) {
