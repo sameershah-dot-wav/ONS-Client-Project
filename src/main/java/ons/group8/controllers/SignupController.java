@@ -28,11 +28,11 @@ public class SignupController {
     @Autowired
     private UserRepositoryJPA userRepositoryJPA;
 
-    @Autowired
-    private ConfirmationTokenRepositoryJPA confirmationTokenRepository;
+//    @Autowired
+//    private ConfirmationTokenRepositoryJPA confirmationTokenRepository;
 
-    @Autowired
-    private EmailSenderService emailSenderService;
+//    @Autowired
+//    private EmailSenderService emailSenderService;
 
 
     @Autowired
@@ -54,18 +54,18 @@ public class SignupController {
         } else {
             try {
                 userService.save(new UserCreationEvent(newUser.getEmail(), newUser.getFirstName(), newUser.getLastName(), newUser.getPassword(), newUser.getRepeatPassword()));
-                // ConfirmationToken confirmationToken = new ConfirmationToken(userService.findByEmail(newUser.getEmail()));
-
-                // confirmationTokenRepository.save(confirmationToken);
-
-                // SimpleMailMessage mailMessage = new SimpleMailMessage();
-                // mailMessage.setTo(user.getEmail());
-                // mailMessage.setSubject("Complete Registration!");
-                // mailMessage.setFrom("chand312902@gmail.com");
-                // mailMessage.setText("To confirm your account, please click here : "
-                //         +"https://localhost:8443/sign-up/confirm-account/"+user.getEmail()+"?token="+confirmationToken.getConfirmationToken());
-
-                // emailSenderService.sendEmail(mailMessage);
+//                 ConfirmationToken confirmationToken = new ConfirmationToken(userService.findByEmail(newUser.getEmail()));
+//
+//                 confirmationTokenRepository.save(confirmationToken);
+//
+//                 SimpleMailMessage mailMessage = new SimpleMailMessage();
+//                 mailMessage.setTo(user.getEmail());
+//                 mailMessage.setSubject("Complete Registration!");
+//                 mailMessage.setFrom("chand312902@gmail.com");
+//                 mailMessage.setText("To confirm your account, please click here : "
+//                         +"https://localhost:8443/sign-up/confirm-account/"+user.getEmail()+"?token="+confirmationToken.getConfirmationToken());
+//
+//                 emailSenderService.sendEmail(mailMessage);
 
                 model.addAttribute("user", newUser);
 
@@ -77,26 +77,26 @@ public class SignupController {
         }
     }
 
-    @GetMapping("confirm-account/{email}")
-    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, @PathVariable("email") String email)
-    {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
-
-        if(token != null)
-        {
-            User user = userRepositoryJPA.findUserByEmail(token.getUser().getEmail());
-            user.setEnabled(true);
-            userRepositoryJPA.save(user);
-            System.out.println(user);
-            return "email-verified";
-        }
-        else
-        {
-            modelAndView.addObject("message", "The link is invalid or broken!");
-            modelAndView.setViewName("error");
-            return "403-access-denied";
-        }
-
-    }
+//    @GetMapping("confirm-account/{email}")
+//    public String confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, @PathVariable("email") String email)
+//    {
+//        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+//
+//
+//        if(token != null)
+//        {
+//            User user = userRepositoryJPA.findUserByEmail(token.getUser().getEmail());
+//            user.setEnabled(true);
+//            userRepositoryJPA.save(user);
+//            System.out.println(user);
+//            return "email-verified";
+//        }
+//        else
+//        {
+//            modelAndView.addObject("message", "The link is invalid or broken!");
+//            modelAndView.setViewName("error");
+//            return "403-access-denied";
+//        }
+//
+//    }
 }
