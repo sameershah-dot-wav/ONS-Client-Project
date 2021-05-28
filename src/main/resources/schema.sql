@@ -93,76 +93,76 @@ CREATE TABLE IF NOT EXISTS confirmation_token(
      
      
 -- validate email procedure
-DROP PROCEDURE IF EXISTS validate_email;
-DELIMITER $$
-CREATE PROCEDURE validate_email(
-		IN email VARCHAR(128)
-)
-DETERMINISTIC
-NO SQL
-BEGIN
-		IF NOT (SELECT email REGEXP '^[^\@<>+*/=!"£$%^&()`¬\\|;:?,#~]+@cardiff.ac.uk+$') THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'WRONG email format';
-		END IF;
-END $$
-DELIMITER ;
-
--- validate first and last name procedure
-DROP PROCEDURE IF EXISTS validate_user_first_name;
-DELIMITER $$
-CREATE PROCEDURE validate_user_first_name(
-		IN first_name VARCHAR(128)
-)
-DETERMINISTIC
-NO SQL
-BEGIN
-		IF (SELECT first_name REGEXP '[0-9\@<>+*/=!"£$%^&()`¬\\|;:?,#~]') THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Names can only contains letters';
-		END IF;
-END $$
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS validate_user_last_name;
-DELIMITER $$
-CREATE PROCEDURE validate_user_last_name(
-		IN last_name VARCHAR(128)
-)
-DETERMINISTIC
-NO SQL
-BEGIN
-		IF (SELECT last_name REGEXP '[0-9\@<>+*/=!"£$%^&()`¬\\|;:?,#~]') THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Names can only contains letters';
-		END IF;
-END $$
-DELIMITER ;
-
-
--- validate email trigger
-DELIMITER $$
-CREATE TRIGGER `user_validate_insert`
-BEFORE INSERT ON `user` FOR EACH ROW
-BEGIN
-		CALL validate_email(NEW.email);
-        CALL validate_user_first_name(NEW.first_name);
-        CALL validate_user_last_name(NEW.last_name);
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE TRIGGER user_validate_update
-BEFORE UPDATE ON `user` FOR EACH ROW
-BEGIN
-		CALL validate_email(NEW.email);
-		CALL validate_user_first_name(NEW.first_name);
-		CALL validate_user_last_name(NEW.last_name);
-END $$
-DELIMITER ;
-
-
-
-
-
-
+# DROP PROCEDURE IF EXISTS validate_email;
+# DELIMITER $$
+# CREATE PROCEDURE validate_email(
+# 		IN email VARCHAR(128)
+# )
+# DETERMINISTIC
+# NO SQL
+# BEGIN
+# 		IF NOT (SELECT email REGEXP '^[^\@<>+*/=!"£$%^&()`¬\\|;:?,#~]+@cardiff.ac.uk+$') THEN
+# 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'WRONG email format';
+# 		END IF;
+# END $$
+# DELIMITER ;
+#
+# -- validate first and last name procedure
+# DROP PROCEDURE IF EXISTS validate_user_first_name;
+# DELIMITER $$
+# CREATE PROCEDURE validate_user_first_name(
+# 		IN first_name VARCHAR(128)
+# )
+# DETERMINISTIC
+# NO SQL
+# BEGIN
+# 		IF (SELECT first_name REGEXP '[0-9\@<>+*/=!"£$%^&()`¬|;:?,#~]') THEN
+# 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Names can only contains letters';
+# 		END IF;
+# END $$
+# DELIMITER ;
+#
+# DROP PROCEDURE IF EXISTS validate_user_last_name;
+# DELIMITER $$
+# CREATE PROCEDURE validate_user_last_name(
+# 		IN last_name VARCHAR(128)
+# )
+# DETERMINISTIC
+# NO SQL
+# BEGIN
+# 		IF (SELECT last_name REGEXP '[0-9\@<>+*/=!"£$%^&()`¬|;:?,#~]') THEN
+# 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Names can only contains letters';
+# 		END IF;
+# END $$
+# DELIMITER ;
+#
+#
+# -- validate email trigger
+# DELIMITER $$
+# CREATE TRIGGER `user_validate_insert`
+# BEFORE INSERT ON `user` FOR EACH ROW
+# BEGIN
+# 		CALL validate_email(NEW.email);
+#         CALL validate_user_first_name(NEW.first_name);
+#         CALL validate_user_last_name(NEW.last_name);
+# END$$
+# DELIMITER ;
+#
+# DELIMITER $$
+# CREATE TRIGGER user_validate_update
+# BEFORE UPDATE ON `user` FOR EACH ROW
+# BEGIN
+# 		CALL validate_email(NEW.email);
+# 		CALL validate_user_first_name(NEW.first_name);
+# 		CALL validate_user_last_name(NEW.last_name);
+# END $$
+# DELIMITER ;
+#
+#
+#
+#
+#
+#
 -- Stored procedure to get a count of the checklist items that have been checked
 DROP PROCEDURE IF EXISTS getCheckedItemsCountForPersonalChecklist;
 
@@ -185,18 +185,18 @@ DELIMITER ;
 
 
 
--- CREATE USER IF NOT EXISTS 'onsUser'@'localhost' IDENTIFIED BY '2Nng2?9P6q47QJLAL=^3';
+CREATE USER IF NOT EXISTS 'onsUser'@'localhost' IDENTIFIED BY '2Nng2?9P6q47QJLAL=^3';
 
--- grant usage on ons.* to 'onsUser'@'localhost';
+grant usage on ons.* to 'onsUser'@'localhost';
 
--- grant select, insert, delete, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.user to 'onsUser'@'localhost';
--- grant select, insert, update, alter on ons.role to 'onsUser'@'localhost';
--- grant select, insert, update, alter, delete on ons.user_role to 'onsUser'@'localhost';
--- grant select, insert, update, alter on ons.checklist_template to 'onsUser'@'localhost';
--- grant select, insert, update, alter on ons.topic to 'onsUser'@'localhost';
--- grant select, insert, update, alter on ons.checklist_template_item to 'onsUser'@'localhost';
--- grant select, insert, update, delete, alter on ons.personal_checklist to 'onsUser'@'localhost';
--- grant select, insert, update, delete, alter on ons.checklist_item to 'onsUser'@'localhost';
--- grant execute on procedure ons.getCheckedItemsCountForPersonalChecklist to 'onsUser'@'localhost';
--- show grants for 'onsUser'@'localhost';
--- flush privileges;
+grant select, insert, delete, update(id,first_name, last_name, password, email, failed_attempt, account_non_locked, lock_time, enabled) on ons.user to 'onsUser'@'localhost';
+grant select, insert, update, alter on ons.role to 'onsUser'@'localhost';
+grant select, insert, update, alter, delete on ons.user_role to 'onsUser'@'localhost';
+grant select, insert, update, alter on ons.checklist_template to 'onsUser'@'localhost';
+grant select, insert, update, alter on ons.topic to 'onsUser'@'localhost';
+grant select, insert, update, alter on ons.checklist_template_item to 'onsUser'@'localhost';
+grant select, insert, update, delete, alter on ons.personal_checklist to 'onsUser'@'localhost';
+grant select, insert, update, delete, alter on ons.checklist_item to 'onsUser'@'localhost';
+grant execute on procedure ons.getCheckedItemsCountForPersonalChecklist to 'onsUser'@'localhost';
+show grants for 'onsUser'@'localhost';
+flush privileges;

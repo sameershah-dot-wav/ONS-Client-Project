@@ -168,7 +168,7 @@ public class AuthorController {
                 model.addAttribute("message", "The checklist failed to be created");
             } finally {
                 status.setComplete(); // This ends the session of ChecklistTemplateForm. Used: https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/spring-model-attribute-with-session.html
-                return "message";
+                return "checklist/view-all-checklist-templates";
             }
         }
     }

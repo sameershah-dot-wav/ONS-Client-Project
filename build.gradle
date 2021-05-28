@@ -6,7 +6,7 @@ plugins {
 
 group = 'ons'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '8'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -26,6 +26,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation group: 'de.mkammerer', name: 'argon2-jvm', version: '2.1'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.64'
 
     runtime 'com.h2database:h2'
 
@@ -45,5 +47,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    ignoreFailures = true
 }

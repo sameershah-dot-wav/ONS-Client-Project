@@ -15,17 +15,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class Group8ApplicationTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-    
-    @Test
-    @WithMockUser(roles = {"AUTHOR"})
-    public void should_get_view_of_all_existing_checklist_authors() throws Exception {
-
-        this.mockMvc
-                .perform(get("/author/view-checklist-authors"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
 }

@@ -131,7 +131,7 @@ public class AdminController {
     public String deleteUser(@PathVariable("id") Long id, Model model) {
         List<PersonalChecklist> personalChecklistList = thePersonalChecklistRepositoryJPA.findPersonalChecklistsByUser_Id(id);
         thePersonalChecklistRepositoryJPA.deleteAll(personalChecklistList);
-        theConfirmationTokenRepositoryJPA.delete(theConfirmationTokenRepositoryJPA.findByUserId(id));
+//        theConfirmationTokenRepositoryJPA.delete(theConfirmationTokenRepositoryJPA.findByUserId(id));
         theUserRepositoryJPA.delete(theUserRepositoryJPA.findUserById(id));
 
          model.addAttribute("users", theAdminService.findAll());
